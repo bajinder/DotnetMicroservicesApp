@@ -6,10 +6,17 @@ services:
         restart: always
         volumes:
             - ${WEBAPP_STORAGE_HOME}/site:/data/db
-        posts:
+        ports:
             - "27017:27017"
+
     catalog.api:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+            - "CatalogDatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+        depends_on:
+            - catalogdb
+        volumes:
+            - ${HOME}/.microsoft/usersecrets/:/root/.mocrosoft/usersecrets
+            - ${HOME}/.aspnet/https:/root/.aspnet/https/
         ports:
-            - "80"
+            - "8000:80"
