@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+    catalogdb:
+        container_name: catalogdb
+        restart: always
+        volumes:
+            - ${WEBAPP_STORAGE_HOME}/site:/data/db
+        posts:
+            - "27017:27017"
+    catalog.api:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        ports:
+            - "80"
