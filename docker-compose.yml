@@ -4,8 +4,41 @@ services:
     catalogdb:
         image: mongo
 
+    basketdb:
+        image: redis
+
+    orderdb:
+        image: mcr.microsoft.com/mssql/server
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+
     catalog.api:
         image: ${DOCKER_REGISTRY-}catalogapi
         build:
             context: .
             dockerfile: src/Catalog/Catalog.API/Dockerfile
+
+    basket.api:
+        image: ${DOCKER_REGISTRY-}basketapi
+        build:
+            context: .
+            dockerfile: src/Basket/Basket.API/Dockerfile
+
+    ordering.api:
+        image: ${DOCKER_REGISTRY-}orderingapi
+        build:
+            context: .
+            dockerfile: src/Ordering/Ordering.API/Dockerfile
+
+    ocelotapigatway:
+        image: ${DOCKER_REGISTRY-}ocelotapigatway
+        build:
+            context: .
+            dockerfile: src/ApiGatway/OcelotAPIGatway/Dockerfile
+
+    store:
+        image: ${DOCKER_REGISTRY-}store
+        build:
+            context: .
+            dockerfile: src/WebApp/Store/Dockerfile
